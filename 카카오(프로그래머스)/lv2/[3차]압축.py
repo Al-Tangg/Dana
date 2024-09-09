@@ -2,7 +2,8 @@
 
 def solution(msg):
     answer = []
-    words = [chr(65+c) for c in range(26)]
+    words = {chr(j + 64) : j for j in range(1, 27)}
+    next_index = 27
     
     i = 0
     while i < len(msg):
@@ -11,9 +12,13 @@ def solution(msg):
         while i < len(msg) and w + msg[i] in words:
             w += msg[i]
             i += 1
-        answer.append(words.index(w) + 1)
+        answer.append(words[w])
         
         if i < len(msg):
-            words.append(w + msg[i])
+            words[w + msg[i]] = next_index
+            next_index += 1
         
     return answer
+
+# 딕셔너리로 자료형을 수정
+# 리스트에서 index()로 찾는 시간: O(n), 딕셔너리 탐색 시간: O(1)
