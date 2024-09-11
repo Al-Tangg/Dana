@@ -1,28 +1,23 @@
 def solution(dartResult):
     i = 0
     bonus_d = {'S': 1, 'D':2, 'T':3}
+    dartResult = dartResult.replace("10", 'K')
+    
     ans = []
     
-    while i < len(dartResult):
-        tmp_s = ""
-        while dartResult[i].isdigit():
-            tmp_s += dartResult[i]
-            i+=1
-            
-        score = int(tmp_s)
-        bonus = dartResult[i]
-        i+=1 
-        
-        ans.append(score ** bonus_d[bonus])
-        
-        # 아차상
-        if i < len(dartResult) and not dartResult[i].isdigit():
-            if dartResult[i] == '#':
-                ans[-1] *= (-1)
-            elif dartResult[i] == '*':
-                if i != 2:
-                    ans[-2] *= 2
-                ans[-1] *= 2
+    i = -1
+
+    for d in dartResult:
+        if d in bonus_d:
+            ans[-1] = ans[-1] ** bonus_d[d]
+        elif d == '*':
+            ans[-1] *= 2
+            if i != 0:
+                ans[-2] *= 2
+        elif d == '#':
+            ans[-1] *= (-1)
+        else:
+            ans.append(10) if d == 'K' else ans.append(int(d))
             i += 1
     
     return sum(ans)
