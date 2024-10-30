@@ -1,3 +1,5 @@
+# https://www.acmicpc.net/problem/2230
+
 import sys
 
 N, M = map(int, sys.stdin.readline().split())
@@ -8,22 +10,17 @@ for _ in range(N):
 
 arr.sort()
 
+result = sys.maxsize
+
 l = 0
 r = 0
 
-answer = sys.maxsize
-
-# 그 차이가 M 이상이면서 가장 작은 경우
-
 while l <= r and r < N:
-    val = arr[r] - arr[l] 
-    if val >= M:
-        if val < answer:
-            answer = val
+    while l <= r and arr[r] - arr[l] >= M:
+        if result > arr[r] - arr[l]:
+            result = arr[r] - arr[l]
         l += 1
-    else:
-        r += 1
+    
+    r += 1
 
-print(answer)
-
-# 이 방식은 하나만찾게 되네
+print(result)
